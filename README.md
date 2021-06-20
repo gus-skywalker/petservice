@@ -6,11 +6,15 @@ Autor: Gustavo Xavier Damasceno
 @gus-skywalker (GitHub)
 
 FRONT-END
+
 ./web
+
 (Falta serializar Json e implementar funções de cadastro)
 
 EXECUTAR APLICAÇÃO (BACK-END)
-./vet-api
+
+    ./vet-api
+
     ./mvn spring-boot:run
 
 SQL H2-Database
