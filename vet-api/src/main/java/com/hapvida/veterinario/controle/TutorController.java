@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.hapvida.veterinario.entidades.Veterinario;
-import com.hapvida.veterinario.repository.VeterinarioDAO;
+import com.hapvida.veterinario.entidades.Tutor;
+import com.hapvida.veterinario.repository.TutorDAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,55 +19,54 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/vet")
-public class VeterinarioController {
+@RequestMapping("/api/tutor")
+public class TutorController {
 
 	@Autowired
-	VeterinarioDAO vetDao;    
+	TutorDAO tutorDao;
 
-    @GetMapping("/listar")
-    public ResponseEntity<List<Veterinario>> lista() {
+	@GetMapping("/listar")
+	public ResponseEntity<List<Tutor>> listar() {
 		try {
 
-            List<Veterinario> vets = new ArrayList<Veterinario>();
-			vetDao.findAll().forEach(vets::add);
+			List<Tutor> tutores = new ArrayList<Tutor>();
+			tutorDao.findAll().forEach(tutores::add);
 
-			return new ResponseEntity<>(vets, HttpStatus.CREATED);
+			return new ResponseEntity<>(tutores, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-    @GetMapping("/{id}")
-	public ResponseEntity<Veterinario> getTutorById(@PathVariable("id") long id) {
-		Optional<Veterinario> vetData = vetDao.findById(id);
+	@GetMapping("/{id}")
+	public ResponseEntity<Tutor> getTutorById(@PathVariable("id") long id) {
+		Optional<Tutor> tutorData = tutorDao.findById(id);
 
-		if (vetData.isPresent()) {
-			return new ResponseEntity<>(vetData.get(), HttpStatus.OK);
+		if (tutorData.isPresent()) {
+			return new ResponseEntity<>(tutorData.get(), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-    }
+	}
 
 	@PostMapping("/cadastrar")
-    public ResponseEntity<Veterinario> adiciona(@RequestBody Veterinario veterinario) {
+	public ResponseEntity<Tutor> cadastrar(@RequestBody Tutor tutor) {
 		try {
-			Veterinario _veterinario = vetDao
-					.save(veterinario);
-			return new ResponseEntity<>(_veterinario, HttpStatus.CREATED);
+			Tutor _tutor = tutorDao.save(new Tutor(tutor.getNome(), tutor.getTelefone(), tutor.getEmail()));
+			return new ResponseEntity<>(_tutor, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-    @DeleteMapping("/delete/{id}")
+	@DeleteMapping("/apagar/{id}")
 	public ResponseEntity<HttpStatus> deleteTutorById(@PathVariable("id") long id) {
 		try {
-			vetDao.deleteById(id);
+			tutorDao.deleteById(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-   
+
 }

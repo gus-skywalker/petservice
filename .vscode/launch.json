@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-VeterinarioApplication<veterinario>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.hapvida.veterinario.VeterinarioApplication",
+            "projectName": "veterinario",
+            "args": ""
+        }
+    ]
+}

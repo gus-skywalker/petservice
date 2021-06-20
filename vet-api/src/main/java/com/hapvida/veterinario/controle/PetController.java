@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,14 +27,10 @@ public class PetController {
 	AnimalDAO animalDao;
 
 	@GetMapping("/listar")
-	public ResponseEntity<List<Animal>> getAllPets() {
+	public ResponseEntity<List<Animal>> listar() {
 		try {
 			List<Animal> pets = new ArrayList<Animal>();
 			animalDao.findAll().forEach(pets::add);
-			
-			if (pets.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
 
 			return new ResponseEntity<>(pets, HttpStatus.OK);
 		} catch (Exception e) {
@@ -55,7 +50,7 @@ public class PetController {
 	}
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Animal> createPet(@RequestBody Animal animal) {
+	public ResponseEntity<Animal> cadastrar(@RequestBody Animal animal) {
 		try {
 			Animal _animal = animalDao.save(animal);
 			return new ResponseEntity<>(_animal, HttpStatus.CREATED);

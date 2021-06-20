@@ -38,7 +38,5 @@ public class Veterinario {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Consulta> consulta = new ArrayList<>();
-    
-    
    
 }

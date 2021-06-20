@@ -27,15 +27,11 @@ public class ConsultaController {
 	ConsultaDAO consultaDao;
 
 	@GetMapping("/listar")
-	public ResponseEntity<List<Consulta>> getAllPets() {
+	public ResponseEntity<List<Consulta>> listar() {
 		try {
 			List<Consulta> consultas = new ArrayList<Consulta>();
 
 			consultaDao.findAll().forEach(consultas::add);
-			
-			if (consultas.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
 
 			return new ResponseEntity<>(consultas, HttpStatus.OK);
 		} catch (Exception e) {
@@ -44,7 +40,7 @@ public class ConsultaController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Consulta> getPetById(@PathVariable("id") long id) {
+	public ResponseEntity<Consulta> getConsultaById(@PathVariable("id") long id) {
 		Optional<Consulta> consultaData = consultaDao.findById(id);
 
 		if (consultaData.isPresent()) {
@@ -55,7 +51,7 @@ public class ConsultaController {
 	}
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Consulta> createPet(@RequestBody Consulta consulta) {
+	public ResponseEntity<Consulta> cadastrar(@RequestBody Consulta consulta) {
 		try {
 			Consulta _consulta = consultaDao.save(consulta);
 			return new ResponseEntity<>(_consulta, HttpStatus.CREATED);
@@ -65,7 +61,7 @@ public class ConsultaController {
 	}
 
 	@PutMapping("atualizar/{id}")
-	public ResponseEntity<Consulta> updateConsulta(@PathVariable("id") long id, @RequestBody Consulta consulta) {
+	public ResponseEntity<Consulta> updateConsultaById(@PathVariable("id") long id, @RequestBody Consulta consulta) {
 		Optional<Consulta> consultaData = consultaDao.findById(id);
 
 		if (consultaData.isPresent()) {
@@ -81,7 +77,7 @@ public class ConsultaController {
 	}
 
 	@DeleteMapping("/apagar/{id}")
-	public ResponseEntity<HttpStatus> deletePetById(@PathVariable("id") long id) {
+	public ResponseEntity<HttpStatus> deleteConsultaById(@PathVariable("id") long id) {
 		try {
 			consultaDao.deleteById(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);

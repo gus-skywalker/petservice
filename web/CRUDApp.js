@@ -84,12 +84,6 @@ let CRUDApp = new function() {
                 status: status
                 }
             );
-            //TESTE DA EDICAO: OK! this.contatos.splice (0, 1, {nome: "eu", telefone: "2", email: "3"});
-
-            // Reseta os campos do input do form
-            /* el1.value = '';
-            el2.value = '';
-            el3.value = ''; */
 
             // Mostra a nova lista
             //alert("Paciente cadastrado com sucesso");
@@ -104,24 +98,23 @@ let CRUDApp = new function() {
     this.listaTudo = function () {
         let data = ''; //Variável de Escopo Local
         
-        let lista = CRUDFetch.listar();
-        if (lista.length > 0) { // Recupera Variável de Contatos Global e faz um loop nos Objetos da Matriz
-            for (o = 0; o < lista.length; o++) {
+        if (this.lista_pacientes.length > 0) { // Recupera Variável de Contatos Global e faz um loop nos Objetos da Matriz
+            for (o = 0; o < this.lista_pacientes.length; o++) {
                 data += '<tr class="paciente">';
-                data += '<td class="paciente_data">' + lista[o].data + '</td>';
-                data += '<td class="paciente_status">' + lista[o].status + '</td>';
-                data += '<td class="paciente_nome_animal">' + lista[o].nome_animal + '</td>';
-                data += '<td class="paciente_nome_tutor">' + lista[o].nome_tutor + '</td>';
-                data += '<td class="paciente_telefone_tutor">' + lista[o].telefone_tutor + '</td>';
-                data += '<td class="paciente_email_tutor">' + lista[o].email_tutor + '</td>';
-                data += '<td class="paciente_veterinario">' + lista[o].veterinarios + '</td>';
+                data += '<td class="paciente_data">' + this.lista_pacientes[o].data + '</td>';
+                data += '<td class="paciente_status">' + this.lista_pacientes[o].status + '</td>';
+                data += '<td class="paciente_nome_animal">' + this.lista_pacientes[o].nome_animal + '</td>';
+                data += '<td class="paciente_nome_tutor">' + this.lista_pacientes[o].nome_tutor + '</td>';
+                data += '<td class="paciente_telefone_tutor">' + this.lista_pacientes[o].telefone_tutor + '</td>';
+                data += '<td class="paciente_email_tutor">' + this.lista_pacientes[o].email_tutor + '</td>';
+                data += '<td class="paciente_veterinario">' + this.lista_pacientes[o].veterinarios + '</td>';
 
                 data += '<td><button onclick="CRUDApp.atualiza(' + o + ')">Edit</button></td>'; // Insere botão Edição na própria lista de contatos
                 data += '<td><button onclick="CRUDApp.delete(' + o + ')">Delete</button></td>'; //Insere botão Delete na própria lista de contatos
                 data += '</tr>';
             }
         }
-        this.contador(lista.length); // Executa o contador
+        this.contador(this.lista_pacientes); // Executa o contador
         return this.el.innerHTML = data; // Retorna o input dos dados do laço For() no Elemento Global 'el'
     };
 
