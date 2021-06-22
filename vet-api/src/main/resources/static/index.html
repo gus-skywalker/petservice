@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Clinica Vet PET-HomeCare</title>
+</head>
+
+<body>
+    <a>Consulta Veterinária</a>
+    <br>
+    <!-- <div>
+        <form class="buscar" onsubmit="return false;">
+            <br>
+            <a>Buscar</a>
+            <input name="buscar-campo">
+            <select name="buscar-opcoes">
+                <option value="animal">Animal</option>
+                <option value="tutor">Tutor</option>
+                <option value="veterinario">Veterinario</option>
+                <option value="dataconsulta">Data da Consulta</option>
+            </select>
+            <button onClick="return false;">OK</button><br>
+            <br>
+        </form>
+    </div>
+ -->
+
+    <div class="form-consulta">
+        <form method="POST" onsubmit="event.preventDefault(); submeterConsulta(this); return false;">
+            <div>
+                <label for="consulta_data">Data da Consulta</label>
+                <input type="date" name="dataconsulta" id="consulta_data">
+            </div>
+            <div>
+                <label for="consulta_status">Status</label>
+                <select id="consulta_status" name="status">
+                    <option value="AGENDADO">AGENDADO</option>
+                    <option value="REALIZADO">REALIZADO</option>
+                    <option value="CANCELADO">CANCELADO</option>
+                </select>
+            </div>
+            <input type="submit" value="Salvar" />
+    </div>
+    </form>
+    </div>
+    <div class="form-pet">
+        <form method="POST" onsubmit="event.preventDefault(); submeterPet(this); return false;"
+            enctype="multipart/form-data">
+            <div>
+                <label for="pet_nome">Nome do Animal</label>
+                <input type="text" name="nome" id="pet_nome">
+            </div>
+            <div>
+                <label for="pet_especie">Especie</label>
+                <select name="especie" id="pet_especie">
+                    <option value="PEIXE">PEIXE</option>
+                    <option value="REPTIL">REPTIL</option>
+                    <option value="AVE">AVE</option>
+                    <option value="MAMIFERO">MAMIFERO</option>
+                </select>
+            </div>
+            <div>
+                <label for="pet_raca">Raça</label>
+                <input type="text" name="raca" id="pet_raca">
+            </div>
+            <div>
+                <label for="pet_data">Data de Nascimento</label>
+                <input type="date" name="datanascimento" id="pet_data">
+            </div>
+            <div>
+                <label for="select_tutor">Tutor</label>
+                <select id="select_tutor" name="tutor"></select>
+            </div>
+            <div>
+                <label for="select_vet">Veterinario Responsável</label>
+                <select id="select_vet" name="veterinario"></select>
+            </div>
+            <div>
+                <label for="consulta_status">Status</label>
+                <select id="consulta_status" name="status">
+                    <option value="AGENDADO">AGENDADO</option>
+                    <option value="REALIZADO">REALIZADO</option>
+                    <option value="CANCELADO">CANCELADO</option>
+                </select>
+            </div>
+            <div>
+                <input type="submit" value="Salvar" />
+            </div>
+        </form>
+    </div>
+
+    <div class="form-tutor">
+        <form method="POST" onsubmit="event.preventDefault(); submeterTutor(this); return false;">
+            <div>
+                <label for="tutor_nome">Nome do Tutor</label>
+                <input type="text" name="nome" id="tutor_nome">
+            </div>
+            <div>
+                <label for="tutor_telefone">Telefone</label>
+                <input type="text" name="telefone" id="tutor_telefone">
+            </div>
+            <div>
+                <label for="tutor_email">E-mail</label>
+                <input type="text" name="email" id="tutor_email">
+            </div>
+            <div>
+                <input type="submit" value="Salvar" />
+            </div>
+        </form>
+    </div>
+
+    <div class="form-veterinario">
+        <form method="POST" onsubmit="event.preventDefault(); submeterVet(this); return false;">
+            <div>
+                <label for="vet_nome">Nome do Veterinario</label>
+                <input type="text" name="nome" id="vet_nome">
+            </div>
+            <div>
+                <label for="vet_telefone">Telefone</label>
+                <input type="text" name="telefone" id="vet_telefone">
+            </div>
+            <div>
+                <label for="vet_email">E-mail</label>
+                <input type="text" name="email" id="vet_email">
+            </div>
+            <div>
+                <input type="submit" value="Salvar" />
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <div>
+            <p id="counter"></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Status</th>
+                        <th>Animal</th>
+                        <th>Tutor</th>
+                        <th>Telefone</th>
+                        <th>Email</th>
+                        <th>Veterinário</th>
+                    </tr>
+                </thead>
+                <tbody id="lista"></tbody>
+            </table>
+        </div>
+    </div>
+    <script src="CRUDapp.js"></script>
+    <script src="CRUDFetch.js"></script>
+    <script>
+        let crudPet = new CRUDFetch("/api/pet");
+        let crudConsulta = new CRUDFetch("/api/consulta");
+        let crudVet = new CRUDFetch("/api/vet");
+        let crudTutor = new CRUDFetch("/api/tutor");
+
+        function submeterTutor(form) {
+
+            let tutor = {
+                nome: form.nome.value,
+                telefone: form.telefone.value,
+                email: form.email.value
+            };
+            crudTutor.cadastrar(tutor)
+                .then((response) => {
+                    console.log(response);
+                });
+        }
+
+        async function submeterVet(form) {
+
+            let veterinario = {
+                nome: form.nome.value,
+                telefone: form.telefone.value,
+                email: form.email.value
+            };
+            let response = await crudVet.cadastrar(veterinario);
+            console.log(response);
+        }
+
+        async function submeterConsulta(form) {
+
+            let consulta = {
+                dataconsulta: form.dataconsulta.value,
+                status: form.status.value
+            }
+
+            let response = await crudConsulta.cadastrar(consulta);
+            console.log(response);
+        }
+
+        async function submeterPet(form) {
+
+            let pet = {
+                nome: form.nome.value,
+                especie: form.especie.value,
+                raca: form.raca.value,
+                datanascimento: form.datanascimento.value,
+                tutor: form.tutor
+            };
+            let response = await crudPet.cadastrar(pet);
+            console.log(response);
+        }
+
+        async function preencherSeletor(exp) {
+
+            switch (exp) {
+                case 'select_vet':
+                    var jsonData = await crudVet.listar();
+                    
+                    break;
+                case 'select_tutor':
+                    var jsonData = await crudTutor.listar();
+                    break;
+                default:
+                    alert("Desculpe. Ocorreu algum erro");
+            }
+
+            var select = document.getElementById(exp),
+                option,
+                i = 0,
+                il = jsonData.length;
+            for (; i < il; i += 1) {
+                option = document.createElement('option');
+                option.setAttribute('value', jsonData[i].id);
+                option.appendChild(document.createTextNode(jsonData[i].nome));
+                select.appendChild(option);
+            }
+        }
+
+        this.preencherSeletor('select_vet');
+        this.preencherSeletor("select_tutor");
+
+    </script>
+</body>
+
+</html>

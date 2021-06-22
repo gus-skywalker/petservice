@@ -43,7 +43,7 @@ public class Animal {
     private String raca;
 
     @Column(name = "datanascimento")
-    private LocalDate dataNascimento;
+    private LocalDate datanascimento;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Consulta> consulta = new ArrayList<>();

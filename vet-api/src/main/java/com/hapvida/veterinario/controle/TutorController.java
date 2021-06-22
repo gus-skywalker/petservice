@@ -52,7 +52,7 @@ public class TutorController {
 	@PostMapping("/cadastrar")
 	public ResponseEntity<Tutor> cadastrar(@RequestBody Tutor tutor) {
 		try {
-			Tutor _tutor = tutorDao.save(new Tutor(tutor.getNome(), tutor.getTelefone(), tutor.getEmail()));
+			Tutor _tutor = tutorDao.save(tutor);
 			return new ResponseEntity<>(_tutor, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

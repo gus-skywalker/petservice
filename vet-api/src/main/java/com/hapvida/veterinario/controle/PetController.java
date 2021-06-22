@@ -60,7 +60,7 @@ public class PetController {
 	}
 
 	@PutMapping("/atualizar/{id}")
-	public ResponseEntity<Animal> updatePet(@PathVariable("id") long id, @RequestBody Animal animal) {
+	public ResponseEntity<Animal> updatePet(@RequestBody Animal animal, @PathVariable("id") long id) {
 		Optional<Animal> petData = animalDao.findById(id);
 
 		if (petData.isPresent()) {

@@ -59,7 +59,7 @@ public class VeterinarioController {
 		}
 	}
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/apagar/{id}")
 	public ResponseEntity<HttpStatus> deleteVetById(@PathVariable("id") long id) {
 		try {
 			vetDao.deleteById(id);

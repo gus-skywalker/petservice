@@ -29,7 +29,7 @@ public class Consulta {
     private long id;
 
     @Column(name = "dataconsulta")
-    private LocalDate dataConsulta;
+    private LocalDate dataconsulta;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
