@@ -29,10 +29,11 @@ public class PetController {
 	@GetMapping("/listar")
 	public ResponseEntity<List<Animal>> listar() {
 		try {
-			List<Animal> pets = new ArrayList<Animal>();
-			animalDao.findAll().forEach(pets::add);
+
+			List<Animal> pets = animalDao.findAll();
 
 			return new ResponseEntity<>(pets, HttpStatus.OK);
+
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -68,7 +69,8 @@ public class PetController {
 			_animal.setNome(animal.getNome());
 			_animal.setEspecie(animal.getEspecie());
 			_animal.setRaca(animal.getRaca());
-			_animal.setDataNascimento(animal.getDataNascimento());
+			_animal.setDatanascimento(animal.getDatanascimento());
+			_animal.setTutor(animal.getTutor());
 			return new ResponseEntity<>(animalDao.save(_animal), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

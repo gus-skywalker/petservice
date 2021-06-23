@@ -40,13 +40,21 @@
                     <option value="CANCELADO">CANCELADO</option>
                 </select>
             </div>
+            <div>
+                <label for="select_pet">Animal</label>
+                <select id="select_pet" name="animal"></select>
+            </div>
+            <div>
+                <label for="select_vet">Veterinario Responsável</label>
+                <select id="select_vet" name="veterinario"></select>
+            </div>
+
             <input type="submit" value="Salvar" />
     </div>
     </form>
     </div>
     <div class="form-pet">
-        <form method="POST" onsubmit="event.preventDefault(); submeterPet(this); return false;"
-            enctype="multipart/form-data">
+        <form method="POST" onsubmit="event.preventDefault(); submeterPet(this); return false;">
             <div>
                 <label for="pet_nome">Nome do Animal</label>
                 <input type="text" name="nome" id="pet_nome">
@@ -133,7 +141,8 @@
     <div>
         <div>
             <p id="counter"></p>
-            <table>
+            <button onclick="listaTabela();">Listar</button>
+            <table class='tabela'>
                 <thead>
                     <tr>
                         <th>Data</th>
@@ -143,13 +152,15 @@
                         <th>Telefone</th>
                         <th>Email</th>
                         <th>Veterinário</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody id="lista"></tbody>
+                <tbody>
+                
+                </tbody>
             </table>
         </div>
     </div>
-    <script src="CRUDapp.js"></script>
     <script src="CRUDFetch.js"></script>
     <script>
         let crudPet = new CRUDFetch("/api/pet");
@@ -183,23 +194,29 @@
 
         async function submeterConsulta(form) {
 
-            let consulta = {
-                dataconsulta: form.dataconsulta.value,
-                status: form.status.value
-            }
+            let petId = form.animal.value;
+            let vetId = form.veterinario.value;
 
+            let consulta = {
+                status: form.status.value,
+                dataconsulta: form.dataconsulta.value,
+                animal: { id: petId },
+                veterinario: { id: vetId }
+            };
             let response = await crudConsulta.cadastrar(consulta);
             console.log(response);
         }
 
         async function submeterPet(form) {
 
+            let tutorId = parseInt(form.tutor.value);
+
             let pet = {
                 nome: form.nome.value,
                 especie: form.especie.value,
                 raca: form.raca.value,
                 datanascimento: form.datanascimento.value,
-                tutor: form.tutor
+                tutor: { id: tutorId }
             };
             let response = await crudPet.cadastrar(pet);
             console.log(response);
@@ -210,11 +227,16 @@
             switch (exp) {
                 case 'select_vet':
                     var jsonData = await crudVet.listar();
-                    
                     break;
+
                 case 'select_tutor':
                     var jsonData = await crudTutor.listar();
                     break;
+
+                case 'select_pet':
+                    var jsonData = await crudPet.listar();
+                    break;
+
                 default:
                     alert("Desculpe. Ocorreu algum erro");
             }
@@ -233,6 +255,65 @@
 
         this.preencherSeletor('select_vet');
         this.preencherSeletor("select_tutor");
+        this.preencherSeletor("select_pet");
+
+        async function listaTabela() {
+
+                let consultas = await crudConsulta.listar();
+
+                let tabela = document.querySelector('.tabela');
+                let body = tabela.tBodies[0];
+                body.innerText = '';
+
+
+                for (let consulta of consultas) {
+                    let id = consulta.id;
+                    let linha = document.createElement('tr');
+                    let coluna_status = document.createElement('td');
+                    let coluna_data = document.createElement('td');
+                    let coluna_animal = document.createElement('td');
+                    let coluna_tutor = document.createElement('td');
+                    let coluna_telefone = document.createElement('td');
+                    let coluna_email = document.createElement('td');
+                    let coluna_veterinario = document.createElement('td');
+                    let coluna_acoes = document.createElement('td');
+                    
+                    let botao_editar = document.createElement('button');
+                    let botao_apagar = document.createElement('button');
+
+                    coluna_status.innerHTML = consulta.status;
+                    coluna_data.innerText = consulta.dataconsulta;
+                    coluna_animal.innerText = consulta.animal.nome;
+                    coluna_tutor.innerText = consulta.animal.tutor.nome;
+                    coluna_telefone.innerText = consulta.animal.tutor.telefone;
+                    coluna_email.innerText = consulta.animal.tutor.email;
+                    coluna_veterinario = consulta.veterinario.nome;
+
+                    botao_editar.innerText = 'Editar';
+                    botao_apagar.onclick = function () {
+                        controle.apagar(id);
+                    };
+
+                    botao_apagar.innerText = 'Apagar';
+                    botao_editar.onclick = function () {
+                        controle.formularioEdicao(id);
+                    };
+
+                    linha.append(coluna_status);
+                    linha.append(coluna_data);
+                    linha.append(coluna_animal);
+                    linha.append(coluna_tutor);
+                    linha.append(coluna_telefone);
+                    linha.append(coluna_email);
+                    linha.append(coluna_veterinario);
+                    linha.append(coluna_acoes);
+                    coluna_acoes.append(botao_editar);
+                    coluna_acoes.append(botao_apagar);
+                    body.append(linha);
+                }
+
+        }
+        //listaTabela();
 
     </script>
 </body>

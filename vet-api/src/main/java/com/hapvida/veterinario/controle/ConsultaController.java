@@ -1,6 +1,5 @@
 package com.hapvida.veterinario.controle;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +28,7 @@ public class ConsultaController {
 	@GetMapping("/listar")
 	public ResponseEntity<List<Consulta>> listar() {
 		try {
-			List<Consulta> consultas = new ArrayList<Consulta>();
-
-			consultaDao.findAll().forEach(consultas::add);
+			List<Consulta> consultas = consultaDao.findAll();
 
 			return new ResponseEntity<>(consultas, HttpStatus.OK);
 		} catch (Exception e) {
@@ -66,7 +63,7 @@ public class ConsultaController {
 
 		if (consultaData.isPresent()) {
 			Consulta _consulta = consultaData.get();
-			_consulta.setDataConsulta(consulta.getDataConsulta());
+			_consulta.setDataconsulta(consulta.getDataconsulta());
 			_consulta.setStatus(consulta.getStatus());
 			_consulta.setAnimal(consulta.getAnimal());
 			_consulta.setVeterinario(consulta.getVeterinario());

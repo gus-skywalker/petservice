@@ -1,15 +1,12 @@
 # hapvida-petservice
 Repositorio de uso exclusivo para processo seletivo da HapVida
 
-Seleção Desenvolvedor HapVida
+Seleção para Desenvolvedor HapVida
 Autor: Gustavo Xavier Damasceno
 @gus-skywalker (GitHub)
 
 FRONT-END
-
-./web
-
-(Falta serializar Json e implementar funções de cadastro)
+Acessar: localhost:8080/
 
 EXECUTAR APLICAÇÃO (BACK-END)
 
@@ -35,103 +32,121 @@ INSERT INTO consulta (dataconsulta, status, animal_id, veterinario_id) VALUES ('
 
 ENDPOINTS
 
-Endpoint / Método Java
+TUTOR /api/tutor
+VETERINARIO /api/vet
+ANIMAL/PET /api/pet
+CONSULTA /api/consulta
 
-TUTOR
-/api/tutor
 /listar (listar)
 /{id} (getTutorById)
 /cadastrar (cadastrar)
+/atualizar (atualizar)
 /apagar/{id} (deleteTutorById)
-
-VETERINARIO
-/api/vet
-/listar (listar)
-/{id} (getVetById)
-/cadastrar (cadastrar)
-/delete/{id} (deleteVetById)
-
-ANIMAL/PET
-/api/pet
-/api/listar (listar)
-/{id} (getPetById)
-/cadastrar (cadastrar)
-/atualizar/{id} (updatePet)
-/apagar/{id} (deletePetById)
-
-CONSULTA
-/api/consulta
-/listar (listar)
-/{id} (getConsultaById)
-/cadastrar (cadastrar)
-/atualizar/{id} (updateConsultaById)
-/apagar/{id} (deleteConsultaById)
 
 
 EXEMPLOS JSON
 
+GET {ID}
+localhost:8080/api/tutor/1
+
 POST
 localhost:8080/api/tutor/cadastrar
 {
-    "nome": "maria",
-    "telefone": "32332",
-    "email": "blabla"
+    "nome": "chico",
+    "telefone": "(85)3233-3232",
+    "email": "chicoscience@musica.br"
 }
 
-localhost:8080/api/vet/cadastrar
-{
-    "nome": "dr.dolittle",
-    "telefone": "32332",
-    "email": "blabla"
-}
+ATUALIZAR CONSULTA
+http://localhost:8080/api/consulta/atualizar/1
 
-http://localhost:8080/api/consulta/cadastrar
 {
 "status": "REALIZADO",
 "dataconsulta": "2021-12-12",
-"animal_id": 1,
-"veterinario_id": 1
+"animal": { "id":2 },
+"veterinario": { "id": 2 }
 }
 
-http://localhost:8080/api/pet/cadastrar
-{
-"nome": "kekel",
-"especie": "MAMIFERO",
-"raca": "pastor alemao",
-"datanascimento": "1983-12-12",
-"tutor_id": 1
-}
+APAGAR {ID}
+localhost:8080//api/tutor/apagar/3
 
-DELETE
-localhost:8080/api/tutor/delete/1
-{
-    "nome": "chico",
-    "telefone": "32332",
-    "email": "blabla"
-}
+GET ALL
 
-GET
-http://localhost:8080/api/tutor/listar
+localhost:8080/api/consulta/listar
 [
-  {
+{
     "id": 1,
-    "nome": "Mariana",
-    "telefone": "+55 32323232",
-    "email": "teste@teste.br",
-    "animais": []
+    "dataconsulta": "2021-06-23",
+    "status": "AGENDADO",
+    "animal": {
+      "id": 2,
+      "nome": "kekel",
+      "especie": "MAMIFERO",
+      "raca": "gato siames femma",
+      "datanascimento": null,
+      "consulta": [],
+      "tutor": {
+        "id": 1,
+        "nome": "Marquinhos",
+        "telefone": "+21 97833222",
+        "email": "marquinho_d2@teste.br"
+      }
+    },
+    "veterinario": {
+      "id": 1,
+      "nome": "Dr. Dolittle",
+      "telefone": "+21 32453423",
+      "email": "drdolittle@clinica.pet"
+    }
   },
   {
     "id": 2,
-    "nome": "Marcos Richard",
-    "telefone": "+ 1 232323",
-    "email": "marcos@teste.br",
-    "animais": []
+    "dataconsulta": "2021-06-23",
+    "status": "REALIZADO",
+    "animal": {
+      "id": 3,
+      "nome": "juca",
+      "especie": "PEIXE",
+      "raca": "goldenfish",
+      "datanascimento": null,
+      "consulta": [],
+      "tutor": {
+        "id": 1,
+        "nome": "Marquinhos",
+        "telefone": "+21 97833222",
+        "email": "marquinho_d2@teste.br"
+      }
+    },
+    "veterinario": {
+      "id": 2,
+      "nome": "Dr. Dolittle 2",
+      "telefone": "(85) Paracuru",
+      "email": "dolittle2@filmemassademais.com"
+    }
   },
   {
     "id": 3,
-    "nome": "Jamiroquai",
-    "telefone": "+5 3457683",
-    "email": "doutor@teste.br",
-    "animais": []
+    "dataconsulta": "2021-06-24",
+    "status": "CANCELADO",
+    "animal": {
+      "id": 4,
+      "nome": "juca",
+      "especie": "PEIXE",
+      "raca": "goldenfish",
+      "datanascimento": null,
+      "consulta": [],
+      "tutor": {
+        "id": 2,
+        "nome": "Renatovski",
+        "telefone": "+85 454954454",
+        "email": "macaroots@hotmail.com"
+      }
+    },
+    "veterinario": {
+      "id": 2,
+      "nome": "Dr. Dolittle 2",
+      "telefone": "(85) Paracuru",
+      "email": "dolittle2@filmemassademais.com"
+    }
   }
 ]

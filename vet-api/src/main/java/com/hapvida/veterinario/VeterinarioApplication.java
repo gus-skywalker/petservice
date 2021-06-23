@@ -11,6 +11,6 @@ public class VeterinarioApplication {
 
 	}
 
-	//(exclude = SecurityAutoConfiguration.class)
-	
+	// (exclude = SecurityAutoConfiguration.class)
+
 }
