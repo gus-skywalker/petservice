@@ -29,7 +29,7 @@ function CRUDFetch(url) {
             body: JSON.stringify(bean)
         }
         try {
-            let r = await fetch(url + 'add', myHeader);
+            let r = await fetch(url, myHeader);
             let response = r.text();
             return response;
         } catch (e) { console.log(e); }
@@ -37,7 +37,7 @@ function CRUDFetch(url) {
 
     this.atualizar = async function (bean, id) {
 
-        let response = await fetch(url + 'update/' + id, {
+        let response = await fetch(url + id, {
             method: "PUT",
             body: JSON.stringify(bean),
             headers: {
@@ -51,7 +51,7 @@ function CRUDFetch(url) {
 
     this.apagar = async function (id) {
 
-        return fetch(url + 'delete/' + id, {
+        return fetch(url + id, {
             method: "DELETE"
         }).then(response => {
             if (!response.ok) {

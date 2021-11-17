@@ -1,6 +1,5 @@
 package com.hapvida.veterinario.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +9,7 @@ import com.hapvida.veterinario.repository.VeterinarioDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/vet")
+@CrossOrigin("*")
 public class VeterinarioController {
 
 	@Autowired
@@ -48,7 +49,7 @@ public class VeterinarioController {
 		}
     }
 
-	@PostMapping("/add")
+	@PostMapping("/")
     public ResponseEntity<Veterinario> addVet(@RequestBody Veterinario veterinario) {
 		try {
 			Veterinario _veterinario = vetDao
@@ -59,7 +60,7 @@ public class VeterinarioController {
 		}
 	}
 
-	@PutMapping("/update/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Veterinario> updateVetById(@RequestBody Veterinario veterinario, @PathVariable("id") long id) {
 		Optional<Veterinario> vetData = vetDao.findById(id);
 
@@ -74,7 +75,7 @@ public class VeterinarioController {
 		}
 	}
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
 	public ResponseEntity<HttpStatus> deleteVetById(@PathVariable("id") long id) {
 		try {
 			vetDao.deleteById(id);

@@ -9,6 +9,7 @@ import com.hapvida.veterinario.repository.AnimalDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/pet")
+@CrossOrigin("*")
 public class PetController {
 
 	@Autowired
@@ -49,7 +51,7 @@ public class PetController {
 		}
 	}
 
-	@PostMapping("/add")
+	@PostMapping("/")
 	public ResponseEntity<Animal> addPet(@RequestBody Animal animal) {
 		try {
 			Animal _animal = animalDao.save(animal);
@@ -59,7 +61,7 @@ public class PetController {
 		}
 	}
 
-	@PutMapping("/update/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Animal> updatePetById(@RequestBody Animal animal, @PathVariable("id") long id) {
 		Optional<Animal> petData = animalDao.findById(id);
 
@@ -76,7 +78,7 @@ public class PetController {
 		}
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<HttpStatus> deletePetById(@PathVariable("id") long id) {
 		try {
 			animalDao.deleteById(id);

@@ -9,6 +9,7 @@ import com.hapvida.veterinario.repository.TutorDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/tutor")
+@CrossOrigin("*")
 public class TutorController {
 
 	@Autowired
@@ -48,7 +50,7 @@ public class TutorController {
 		}
 	}
 
-	@PostMapping("/add")
+	@PostMapping("/")
 	public ResponseEntity<Tutor> addTutor(@RequestBody Tutor tutor) {
 		try {
 			Tutor _tutor = tutorDao.save(tutor);
@@ -58,7 +60,7 @@ public class TutorController {
 		}
 	}
 
-	@PutMapping("/update/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Tutor> updatePetById(@RequestBody Tutor tutor, @PathVariable("id") long id) {
 		Optional<Tutor> tutorData = tutorDao.findById(id);
 
@@ -73,7 +75,7 @@ public class TutorController {
 		}
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<HttpStatus> deleteTutorById(@PathVariable("id") long id) {
 		try {
 			tutorDao.deleteById(id);

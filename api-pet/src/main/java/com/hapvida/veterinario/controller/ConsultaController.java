@@ -9,6 +9,7 @@ import com.hapvida.veterinario.repository.ConsultaDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/consulta")
+@CrossOrigin("*")
 public class ConsultaController {
 
 	@Autowired
@@ -47,7 +49,7 @@ public class ConsultaController {
 		}
 	}
 
-	@PostMapping("/add")
+	@PostMapping("/")
 	public ResponseEntity<Consulta> addConsulta(@RequestBody Consulta consulta) {
 		try {
 			Consulta _consulta = consultaDao.save(consulta);
@@ -57,7 +59,7 @@ public class ConsultaController {
 		}
 	}
 
-	@PutMapping("update/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Consulta> updateConsultaById(@PathVariable("id") long id, @RequestBody Consulta consulta) {
 		Optional<Consulta> consultaData = consultaDao.findById(id);
 
@@ -73,7 +75,7 @@ public class ConsultaController {
 		}
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<HttpStatus> deleteConsultaById(@PathVariable("id") long id) {
 		try {
 			consultaDao.deleteById(id);
