@@ -1,8 +1,4 @@
-# hapvida-petservice
-Repositorio de uso exclusivo para processo seletivo da HapVida
-
-Seleção para Desenvolvedor HapVida
-Autor: Gustavo Xavier Damasceno
+# petservice-api + javascript (front-end)
 @gus-skywalker (GitHub)
 
 FRONT-END
