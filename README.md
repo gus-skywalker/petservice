@@ -1,4 +1,5 @@
 # petservice-api + javascript (front-end)
+Java 1.8
 @gus-skywalker (GitHub)
 
 FRONT-END
